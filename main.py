@@ -1,21 +1,25 @@
-import os
-import importlib
 import dash
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-import plotly.graph_objects as go
 import numpy as np
-from points.points import Points_arr
-from plot_fig.figure_1 import plot_figure
+from base.points import Points_arr
+from base.plot_fig.figure_1 import plot_figure
+from base import functions
+from base.algorithms.gradient_descent import GradientDescent
+from base.algorithms.quadratic_programming import QuadraticProgramming
+from base.functions import himmelblau
+from base.algorithms.algorithm_type import AlgorithmType
 
-# Import all functions and algorithms
-# Import all functions and algorithms
-functions = {os.path.splitext(file)[0]: importlib.import_module(f'functions.{os.path.splitext(file)[0]}').__dict__[
-    os.path.splitext(file)[0]] for file in os.listdir('functions') if os.path.isfile(f'functions/{file}') and file.endswith('.py')}
-algorithms = {os.path.splitext(file)[0]: importlib.import_module(f'algorithms.{os.path.splitext(file)[0]}').__dict__[
-    os.path.splitext(file)[0]] for file in os.listdir('algorithms') if os.path.isfile(f'algorithms/{file}') and file.endswith('.py')}
 
+functions = {
+    'himmelblau': himmelblau
+}
+
+algorithms: {str: AlgorithmType} = {
+    'gradient descent': AlgorithmType.gradient_descent,
+    'quadratic programming': AlgorithmType.quadratic_programming
+}
 
 # Create a grid of points
 x = np.linspace(-5, 5, 100)
@@ -45,16 +49,14 @@ app.layout = html.Div([
 )
 def update_graph(function_name, algorithm_name, point_index):
     function = functions[function_name]
-    algorithm = algorithms[algorithm_name]
+    algorithm_type: AlgorithmType = algorithms[algorithm_name]
     points = Points_arr[point_index]
 
     # Run the algorithm
-    path = algorithm(function, points)
-
+    algorithm = algorithm_type.get_algorithm(function, points)
+    path = algorithm.solve()
     # Create the figure
-    fig = plot_figure(path, function)
-
-    return fig
+    return plot_figure(path, function)
 
 
 if __name__ == '__main__':
