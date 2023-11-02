@@ -4,7 +4,7 @@ from base.algorithms.base_algorithm import BaseAlgorithm
 
 
 class QuadraticProgramming(BaseAlgorithm):
-    def solve(self, iterations=20):
+    def solve(self):
         search_range = (0, float("inf"))
         bounds = (search_range, search_range)
         constraints = {'type': 'eq', 'fun': self.function}
