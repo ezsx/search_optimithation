@@ -33,8 +33,8 @@ def plot_figure(paths, f):
                                                                                             "easing": "quadratic-in-out"}}]}]}]
 
     # Layout
-    layout = go.Layout(scene=dict(xaxis=dict(range=[-10, 10]), yaxis=dict(range=[-10, 10]),
-                                  zaxis=dict(range=[-600, 1000])), updatemenus=play_button, sliders=sliders)
+    layout = go.Layout(scene=dict(xaxis=dict(range=[-7, 7]), yaxis=dict(range=[-7, 7]),
+                                  zaxis=dict(range=[-600, 1000])), updatemenus=play_button, sliders=sliders, height=700)
 
     # Create figure
     fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale='Viridis', opacity=0.8, showscale=False)] +
