@@ -5,24 +5,26 @@ from base.algorithms.base_algorithm import BaseAlgorithm
 
 class QuadraticProgramming(BaseAlgorithm):
     def solve(self, iterations=20):
-
-        b = (0, float("inf"))  # search range
-        bounds = (b, b)
-        con = {'type': 'eq', 'fun': self.function}
+        search_range = (0, float("inf"))
+        bounds = (search_range, search_range)
+        constraints = {'type': 'eq', 'fun': self.function}
 
         paths = []
         for point in self.points:
-            path = []
-            for i in range(iterations):
-                def callback(x):
-                    g_list = np.ndarray.tolist(x)
-                    g_list.append(self.function(x))
-                    path.append(g_list)
+            path = [point]
 
-                res = minimize(self.function, point, method="SLSQP", bounds=bounds,
-                               constraints=con, callback=callback)
-                glist = np.ndarray.tolist(res.x)
-                glist.append(res.fun)
-                path.append(glist)
+            def callback(x):
+                path.append(x)
+
+            res = minimize(
+                self.function,
+                point,
+                method="SLSQP",
+                bounds=bounds,
+                constraints=constraints,
+                callback=callback,
+                options={'disp': True}
+            )
+            path.append(res.x)
             paths.append(np.array(path))
         return paths

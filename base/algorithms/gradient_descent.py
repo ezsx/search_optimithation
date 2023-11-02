@@ -9,7 +9,7 @@ class GradientDescent(BaseAlgorithm):
         grad_func = grad(self.function)
         for point in self.points:
             path = [point]
-            for i in range(iterations):
+            for _ in range(iterations):
                 gradient = grad_func(point)
                 point = point - step * gradient
                 path.append(point)

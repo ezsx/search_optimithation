@@ -8,12 +8,13 @@ from base.plot_fig.figure_1 import plot_figure
 from base import functions
 from base.algorithms.gradient_descent import GradientDescent
 from base.algorithms.quadratic_programming import QuadraticProgramming
-from base.functions import himmelblau
+from base.functions import himmelblau, quadratic_function
 from base.algorithms.algorithm_type import AlgorithmType
 
 
 functions = {
-    'himmelblau': himmelblau
+    'himmelblau': himmelblau,
+    'quadratic function': quadratic_function
 }
 
 algorithms: {str: AlgorithmType} = {
