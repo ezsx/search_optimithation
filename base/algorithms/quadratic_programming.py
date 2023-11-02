@@ -5,12 +5,13 @@ from base.algorithms.base_algorithm import BaseAlgorithm
 
 class QuadraticProgramming(BaseAlgorithm):
     def solve(self):
-        search_range = (0, float("inf"))
-        bounds = (search_range, search_range)
-        constraints = {'type': 'eq', 'fun': self.function}
-
         paths = []
         for point in self.points:
+            search_range_1 = (-3, 3)
+            search_range_2 = (-3, 3)
+            bounds = (search_range_1, search_range_2)
+            constraints = {'type': 'eq', 'fun': self.function}
+
             path = [point]
 
             def callback(x):
@@ -20,7 +21,7 @@ class QuadraticProgramming(BaseAlgorithm):
                 self.function,
                 point,
                 method="SLSQP",
-                bounds=bounds,
+                # bounds=bounds,
                 constraints=constraints,
                 callback=callback,
                 options={'disp': True}
