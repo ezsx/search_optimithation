@@ -4,8 +4,8 @@ from dash import html
 from dash.dependencies import Input, Output
 import numpy as np
 from points.points import Points_arr
-from plot_fig.figure_1 import plot_figure
-from utils.Load_dir import load_dir
+from plot_fig.figure_build import plot_figure
+from utils.load_dir import load_dir
 
 # Import all functions and algorithms
 
