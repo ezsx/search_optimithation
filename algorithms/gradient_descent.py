@@ -1,8 +1,5 @@
-import autograd.numpy as np
-
-
-# Gradient Descent
-def Gradient_descent(function, points, learning_rate=0.01, num_iterations=20):
+def gradient_descent(function, points, learning_rate=0.01, num_iterations=20):
+    import autograd.numpy as np
     from autograd import grad
     paths = []
     grad_func = grad(function)

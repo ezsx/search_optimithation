@@ -34,7 +34,7 @@ def plot_figure(paths, f):
 
     # Layout
     layout = go.Layout(scene=dict(xaxis=dict(range=[-5, 5]), yaxis=dict(range=[-5, 5]),
-                                  zaxis=dict(range=[0, 200])), updatemenus=play_button, sliders=sliders)
+                                  zaxis=dict(range=[-200, 1200])), updatemenus=play_button, sliders=sliders)
 
     # Create figure
     fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale='Viridis', opacity=0.8, showscale=False)] +

@@ -1,0 +1,22 @@
+.main-title {
+    text-align: center;
+    color: #2E86C1;
+    padding: 10px 0;
+}
+
+.dropdown {
+    width: 30%;
+    margin: 10px auto;
+}
+
+.graph {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.output-area {
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #2E86C1;
+    border-radius: 5px;
+}
