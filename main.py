@@ -7,7 +7,6 @@ from points.points import Points_arr
 from plot_fig.figure_build import plot_figure
 from plot_fig.figure_build2 import plot_figure2
 from utils.load_dir import load_dir
-from utils.update_colorscale import update_colorscale
 import plotly
 
 # Import all functions and algorithms
@@ -21,7 +20,7 @@ app = dash.Dash(__name__)
 app.layout = html.Div(
     [
         html.H1('Optimization Visualization', className='main-title'),
-
+        html.Div([], className='inherted-container'),
         html.Div([
             dcc.Dropdown(id='function-dropdown',
                          options=[{'label': name, 'value': name} for name in functions.keys()],
@@ -42,6 +41,7 @@ app.layout = html.Div(
                          options=color_scales,
                          value='rdbu',
                          clearable=False,
+                         className='dropdown'
                          ),
         ], className='dropdowns-container'),
         html.Div([
@@ -50,9 +50,14 @@ app.layout = html.Div(
                          readOnly=True,
                          className='output-area'),
         ], className='output-container'),
+
         html.Div([
-            dcc.Graph(id='graph', className='graph'),
+            dcc.Graph(id='graph', className='graph', config={
+                'displayModeBar': False,
+                'modeBarButtonsToRemove': ['toImage', 'sendData', 'autoScale2d', 'resetScale2d']
+            }),
         ], className='graph-container'),
+
     ], className='main-container')
 
 
@@ -75,12 +80,9 @@ def update_graph(function_name, algorithm_name, point_index, color_scale):
     path, output = algorithm(function, points)
 
     # Create the figure
-    fig = plot_figure(path, function)
+    fig = plot_figure(path, function, color_scale)
 
-    # Update the colorscale
-    color_fig = update_colorscale(fig, color_scale)
-
-    return color_fig, '\n'.join(output)
+    return fig, '\n'.join(output)
 
 
 if __name__ == '__main__':

@@ -14,6 +14,7 @@ def quadratic_programming(function, points):
     """
     from scipy.optimize import minimize
     import numpy as np
+    from utils.output import rez_output
     paths = []
     output = []
     for point in points:
@@ -25,7 +26,7 @@ def quadratic_programming(function, points):
 
         def callback(x):
             path.append(x)
-            output.append(f'x,y,z = {x[0]:.2f}, {x[1]:.2f}, {function(x):.2f}')
+            # output.append(f'x,y,z = {x[0]:.2f}, {x[1]:.2f}, {function(x):.2f}')
 
         res = minimize(
             function,
@@ -38,5 +39,7 @@ def quadratic_programming(function, points):
         )
         path.append(res.x)
         paths.append(np.array(path))
-        # output.append(f'x,y,z = {res.x[0]:.2f}, {res.x[1]:.2f}, {function(res.x):.2f}')
+        output.append(
+            rez_output(point, res.x, function)
+        )
     return paths, output

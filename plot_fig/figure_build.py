@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def plot_figure(paths, f):
+def plot_figure(paths, f, color_scale='rdbu'):
     # Create a grid of points
     x = np.linspace(-5, 5, 100)
     y = np.linspace(-5, 5, 100)
@@ -13,7 +13,7 @@ def plot_figure(paths, f):
 
     # Define frames
     frames = [go.Frame(
-        data=[go.Surface(x=x, y=y, z=z, colorscale='Viridis', opacity=0.8, showscale=False)] +
+        data=[go.Surface(x=x, y=y, z=z, colorscale=color_scale, opacity=0.8, showscale=False)] +
 
              [go.Scatter3d(x=path[:k + 1, 0],
                            y=path[:k + 1, 1],
@@ -26,15 +26,42 @@ def plot_figure(paths, f):
     ]
 
     # Define slider and buttons
-    sliders = [{"steps": [{"method": "animate", "args": [[f.name], {"frame": {"duration": 300, "redraw": True},
-                                                                    "mode": "immediate",
-                                                                    "transition": {"duration": 300}}],
-                           "label": str(k)} for k, f in enumerate(frames)],
-                "active": 0, "pad": {"b": 10, "t": 60}, "currentvalue": {"prefix": "Step: "}}]
+    # Define slider and buttons
+    sliders = [
+        {
+            "steps": [
+                {
+                    "method": "animate",
+                    "args": [
+                        [f.name],
+                        {
+                            "frame": {"duration": 300, "redraw": True},
+                            "mode": "immediate",
+                            "transition": {"duration": 300}
+                        }
+                    ],
+                    "label": str(k)
+                } for k, f in enumerate(frames)
+            ],
+            "active": 0,
+            "currentvalue": {"prefix": "Step: "},
+            "transition": {"duration": 300, "easing": "cubic-in-out"},  # Customize the transition
+            "x": 0.1,  # Adjust the x position of the slider
+            "len": 0.9,  # Adjust the length of the slider
+            "xanchor": "left",  # Anchor the x position of the slider to the left
+            "y": 0,  # Adjust the y position of the slider
+            "yanchor": "top",  # Anchor the y position of the slider to the top
+            "currentvalue_font": {"size": 20, "color": "#000000"},  # Customize the font for the current value
+            "font": {"size": 12, "color": "#666666"},  # Customize the font for the slider
+            "borderwidth": 2,  # Add border width to the slider
+            "bordercolor": "#666666",  # Set the border color of the slider
+            "bgcolor": "#f9f9f9",  # Set the background color of the slider
+        }
+    ]
 
     # style slider
-    slider_style = {"bgcolor": "black", "bordercolor": "black", "font": {"color": "black"}}
-    sliders[0].update(slider_style)
+    # slider_style = {"bgcolor": "black", "bordercolor": "black", "font": {"color": "black"}}
+    # sliders[0].update(slider_style)
 
     buttons = [{"type": "buttons",
                 "showactive": False,
@@ -49,7 +76,9 @@ def plot_figure(paths, f):
                        "method": "animate",
                        "args": [[None], {"frame": {"duration": 0, "redraw": True},
                                          "mode": "immediate",
-                                         "transition": {"duration": 0}}]}]}]
+                                         "transition": {"duration": 0}}],
+
+                       }]}]
 
     # Style the play button
     play_button_color_style = {"bgcolor": "rgba(0,0,0,0)", "bordercolor": "rgba(0,0,0,0)"}
@@ -60,7 +89,7 @@ def plot_figure(paths, f):
                                   zaxis=dict(range=[-200, 1200])), updatemenus=buttons, sliders=sliders)
 
     # Create figure
-    fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale='Inferno', opacity=0.8, showscale=False)] +
+    fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale=color_scale, opacity=0.8, showscale=False)] +
                          [go.Scatter3d(x=path[:, 0], y=path[:, 1], z=[f(x) for x in path],
                                        mode='lines+markers', name=f'path {i}',
                                        marker=dict(color=i, size=4, symbol='circle',
