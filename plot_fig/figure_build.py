@@ -60,7 +60,7 @@ def plot_figure(paths, f):
                                   zaxis=dict(range=[-200, 1200])), updatemenus=buttons, sliders=sliders)
 
     # Create figure
-    fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale='Viridis', opacity=0.8, showscale=False)] +
+    fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale='Inferno', opacity=0.8, showscale=False)] +
                          [go.Scatter3d(x=path[:, 0], y=path[:, 1], z=[f(x) for x in path],
                                        mode='lines+markers', name=f'path {i}',
                                        marker=dict(color=i, size=4, symbol='circle',
