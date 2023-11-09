@@ -82,7 +82,7 @@ def update_graph(function_name, algorithm_name, point_index, color_scale):
     # Create the figure
     fig = plot_figure(path, function, color_scale)
 
-    return fig, '\n'.join(output)
+    return fig, str(output)
 
 
 if __name__ == '__main__':
