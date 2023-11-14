@@ -86,7 +86,7 @@ def plot_figure(paths, f, color_scale='rdbu'):
 
     # Layout
     layout = go.Layout(scene=dict(xaxis=dict(range=[-5, 5]), yaxis=dict(range=[-5, 5]),
-                                  zaxis=dict(range=[-200, 1200])), updatemenus=buttons, sliders=sliders)
+                                  zaxis=dict(range=[-200, 1000])), updatemenus=buttons, sliders=sliders)
 
     # Create figure
     fig = go.Figure(data=[go.Surface(x=x, y=y, z=z, colorscale=color_scale, opacity=0.8, showscale=False)] +

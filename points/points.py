@@ -1,7 +1,6 @@
 import numpy as np
 
-random_points = np.random.uniform(-5, 5, (30, 2))
-print(random_points)
+random_points = np.random.uniform(-5, 5, (10, 2))
 
 Points_arr = [
     random_points,

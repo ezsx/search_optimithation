@@ -89,9 +89,7 @@ def genetic_algorithm(function, points, num_generations=200, mutation_rate=0.02)
             new_population.append(child1)
 
         population = new_population
-    print("_______________________________Genetic Algorithm_______________________________")
-    print(len(paths), "____________LEN PATHS______________")
-    print(paths)
+
     paths = np.array(paths)
 
     return paths, output
