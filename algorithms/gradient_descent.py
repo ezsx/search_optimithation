@@ -16,7 +16,7 @@ def gradient_descent(function, points, learning_rate=0.01, num_iterations=12):
     """
     import autograd.numpy as np
     from autograd import grad
-    from utils.output import rez_output
+    from utils.output import rez_output, format_output
 
 
     paths = []
@@ -35,4 +35,5 @@ def gradient_descent(function, points, learning_rate=0.01, num_iterations=12):
             rez_output(x_init, founded_minimum, function)
         )
 
+    output = format_output(output)
     return paths, output

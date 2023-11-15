@@ -53,6 +53,7 @@ def particle_swarm_optimization(function, points, n_iterations=100, w=0.5, c1=1,
             # Track the path of each particle
             paths[i][iteration, :] = particles[i]
 
-    output = f"Best position: {global_best_position}\nBest value: {global_best_value}"
+    output = f'Best finding minimum: [X: {global_best_position[0]:.2f}, Y: {global_best_position[1]:.2f}],' \
+             f' Z: {global_best_value:.2f}'
 
     return paths, output

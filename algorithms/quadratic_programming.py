@@ -14,7 +14,7 @@ def quadratic_programming(function, points):
     """
     from scipy.optimize import minimize
     import numpy as np
-    from utils.output import rez_output
+    from utils.output import rez_output, format_output
     paths = []
     output = []
     for point in points:
@@ -42,4 +42,5 @@ def quadratic_programming(function, points):
         output.append(
             rez_output(point, res.x, function)
         )
+    output = format_output(output)
     return paths, output

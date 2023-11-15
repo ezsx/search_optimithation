@@ -1,95 +1,107 @@
 import numpy as np
 import random
-from utils.output import rez_output
+import logging
 
 
-def selection(population, fitnesses):
+def tournament_selection(population, fitnesses, tournament_size=3):
     """
-    Selects parents for crossover based on roulette wheel selection.
+    Selects parents for crossover based on tournament selection.
 
     :parameter
     ----------
     population (List): The population of individuals.
     fitnesses (List): The fitness values of the individuals.
+    tournament_size (int): The size of the tournament.
 
     :return
     -------
     List: The selected parents.
     """
-    idx = np.random.choice(np.arange(len(population)), size=2, p=fitnesses / fitnesses.sum())
-    return [population[i] for i in idx]
+    selected_indices = np.random.choice(range(len(population)), tournament_size, replace=False)
+    tournament_fitnesses = [fitnesses[i] for i in selected_indices]
+    winner_index = selected_indices[np.argmax(tournament_fitnesses)]
+    return population[winner_index]
 
 
-def crossover(parents):
-    crossover_point = random.randint(1, len(parents[0]) - 1)
-    return np.concatenate((parents[0][:crossover_point], parents[1][crossover_point:]))
-
-
-def mutation(individual, mutation_rate):
+def uniform_crossover(parent1, parent2, crossover_rate=0.5):
     """
-    Mutates an individual with an adaptive mutation strategy.
+    Performs uniform crossover on two parents.
+
+    :parameter
+    ----------
+    parent1, parent2 (List): The parents to crossover.
+    crossover_rate (float): The probability of each gene being swapped.
+
+    :return
+    -------
+    List: The child.
+    """
+    child = []
+    for gene1, gene2 in zip(parent1, parent2):
+        child.append(gene1 if random.random() < crossover_rate else gene2)
+    return child
+
+
+def mutation(individual, mutation_rate, mutation_scale=0.1):
+    """
+    Mutates an individual.
 
     :parameter
     ----------
     individual (List): The individual to be mutated.
     mutation_rate (float): The probability of mutation for each gene.
-    min_values (List): The minimum values for each gene.
-    max_values (List): The maximum values for each gene.
+    mutation_scale (float): Scale of the normal distribution for mutation.
 
     :return
     -------
     List: The mutated individual.
     """
-
     for i in range(len(individual)):
         if random.random() < mutation_rate:
-            individual[i] += np.random.normal()
+            individual[i] += np.random.normal(scale=mutation_scale)
     return individual
 
 
-def genetic_algorithm(function, points, num_generations=200, mutation_rate=0.02):
+def genetic_algorithm(function, points, num_generations=100, mutation_rate=0.02, mutation_scale=0.1):
     """
-    Performs a simple genetic algorithm for optimization.
+    Performs a genetic algorithm for optimization.
 
     :param function: The function to be optimized.
     :param points: Initial points for the population.
     :param num_generations: Number of generations to run the genetic algorithm.
     :param mutation_rate: Probability of mutation for each individual.
+    :param mutation_scale: Scale of normal distribution for mutation.
     :return: A list of arrays representing the paths taken by the genetic algorithm.
-             A list of strings representing the output of the genetic algorithm at each iteration.
     """
     population = points
-    # print(population[0], type(population[0]))
     num_individuals = len(population)
     paths = []
-    output = []
 
     for _ in range(num_generations):
-        fitnesses = np.array([-function(individual) for individual in population])
-        # Make sure all fitness values are positive
-        fitnesses = [fitness if fitness > 0 else 0.0001 for fitness in fitnesses]
-        fitnesses = np.array(fitnesses)
-        fitnesses = fitnesses / fitnesses.sum()  # Normalize fitness values
+        # Fitness calculation (adjusted for minimization)
+        fitnesses = np.array([1 / (1 + function(individual)) for individual in population])
 
         paths.append(population)
-        # output.append([str(individual) + ' : ' + str(function(individual)) for individual in population])
-        output.append([rez_output(individual, individual, function) for individual in population])
         new_population = []
-        # Adjust the range to handle both even and odd numbers of individuals
-        for _ in range(num_individuals // 2):
-            parents = selection(population, fitnesses)
-            child1 = mutation(crossover(parents), mutation_rate)
-            child2 = mutation(crossover(parents[::-1]), mutation_rate)
-            new_population.extend([child1, child2])
 
-        # If there's an odd number of individuals, handle the last remaining individual
-        if num_individuals % 2 != 0:
-            parents = selection(population, fitnesses)
-            child1 = mutation(crossover(parents), mutation_rate)
-            new_population.append(child1)
+        # Main loop of the genetic algorithm
+        while len(new_population) < num_individuals:
+            parent1 = tournament_selection(population, fitnesses)
+            parent2 = tournament_selection(population, fitnesses)
+
+            if random.random() < 0.9:  # Crossover probability
+                child = uniform_crossover(parent1, parent2)
+            else:
+                child = parent1 if random.random() < 0.5 else parent2
+
+            child = mutation(child, mutation_rate, mutation_scale)
+            new_population.append(child)
 
         population = new_population
 
-    paths = np.array(paths)
-
-    return paths, output
+    logging.info("Genetic algorithm finished")
+    # the best finding minimum
+    founded_minimum = paths[-1][-1]
+    output = f'Best finding minimum: [X: {founded_minimum[0]:.2f}, Y: {founded_minimum[1]:.2f}],' \
+             f' Z: {function(founded_minimum):.2f}'
+    return np.array(paths), output

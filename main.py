@@ -3,7 +3,7 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import numpy as np
-from points.points import Points_arr
+from points.points import Points_dict
 from plot_fig.figure_build import plot_figure
 from plot_fig.figure_build2 import plot_figure2
 from utils.load_dir import load_dir
@@ -33,9 +33,9 @@ app.layout = html.Div(
                          clearable=False,
                          className='dropdown'),
             dcc.Dropdown(id='point-dropdown',
-                         options=[{'label': str(point), 'value': i} for i, point in enumerate(Points_arr)],
+                         options=[{'label': name, 'value': name} for name in Points_dict.keys()],
                          clearable=False,
-                         value=0,
+                         value=list(Points_dict.keys())[0],
                          className='dropdown'),
             dcc.Dropdown(id='color-scale-dropdown',
                          options=color_scales,
@@ -74,14 +74,15 @@ app.layout = html.Div(
 def update_graph(function_name, algorithm_name, point_index, color_scale):
     function = functions[function_name]
     algorithm = algorithms[algorithm_name]
-    points = Points_arr[point_index]
+    points = Points_dict[point_index]
 
     # Run the algorithm
     path, output = algorithm(function, points)
 
     # Create the figure
-    fig = plot_figure(path, function, color_scale)
+    fig = plot_figure2(path, function, color_scale)
 
+    print(path)
     return fig, str(output)
 
 
