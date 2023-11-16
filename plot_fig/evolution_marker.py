@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def plot_figure2(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=(-5, 5)):
+def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=(-5, 5)):
     """
     Plots and animates the evolution of populations on a 3D surface representing the function f.
 

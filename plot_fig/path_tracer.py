@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def plot_figure(paths, f, color_scale='rdbu'):
+def plot_traces(paths, f, color_scale='rdbu'):
     # Create a grid of points
     x = np.linspace(-5, 5, 100)
     y = np.linspace(-5, 5, 100)
