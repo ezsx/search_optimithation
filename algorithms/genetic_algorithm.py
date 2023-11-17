@@ -62,7 +62,7 @@ def mutation(individual, mutation_rate, mutation_scale=0.1):
     return individual
 
 
-def genetic_algorithm(function, points, num_generations=100, mutation_rate=0.02, mutation_scale=0.1):
+def genetic_algorithm(function, points, num_generations=30, mutation_rate=0.02, mutation_scale=0.1):
     """
     Performs a genetic algorithm for optimization.
 

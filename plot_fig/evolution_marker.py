@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=(-5, 5)):
+def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_range=(-5, 5), y_range=(-5, 5)):
     """
     Plots and animates the evolution of populations on a 3D surface representing the function f.
 
@@ -11,6 +11,7 @@ def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=
     :param x_range: The range of x values for the surface plot.
     :param y_range: The range of y values for the surface plot.
     :param color_scale: Color scale for the surface plot.
+    :param color_point: Color of the points in the population.
     :return: Plotly figure object.
     """
 
@@ -35,7 +36,7 @@ def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=
                     x=population[:, 0], y=population[:, 1],
                     z=[f(individual) for individual in population],
                     mode='markers',
-                    marker=dict(size=5),
+                    marker=dict(size=6, color=color_point),
                     name=f'Step {k}')
             ],
             name=str(k)
@@ -78,15 +79,17 @@ def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=
                                                "mode": "immediate",
                                                "transition": {"duration": 0}}]}]}]
 
+    # Define the camera settings for a consistent view
+
     # Layout
     layout = go.Layout(
         scene=dict(
             xaxis=dict(range=[x_range[0], x_range[1]]),
             yaxis=dict(range=[y_range[0], y_range[1]]),
-            zaxis=dict(range=[np.min(z), np.max(z)])
+            zaxis=dict(range=[np.min(z), np.max(z)]),
         ),
         updatemenus=buttons,
-        sliders=sliders
+        sliders=sliders,
     )
 
     # Create initial figure
@@ -96,14 +99,17 @@ def plot_evolution(populations, f, color_scale='rdbu', x_range=(-5, 5), y_range=
                  x=populations[0][:, 0], y=populations[0][:, 1],
                  z=[f(individual) for individual in populations[0]],
                  mode='markers',
-                 marker=dict(size=5),
+                 marker=dict(size=6, color=color_point),
                  name='Step 0')
              ],
         frames=frames,
         layout=layout
     )
 
-    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
-    fig.update_layout(modebar=dict(bgcolor="rgba(0,0,0,0)"))
-
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0), modebar=dict(bgcolor="rgba(0,0,0,0)"))
+    # dark theme
+    # fig.update_layout(template="plotly_dark")
+    # automargin=True
+    fig.update_layout(autosize=True)
     return fig
+

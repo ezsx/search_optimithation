@@ -1,6 +1,6 @@
 import numpy as np
 
-random_points = np.random.uniform(-5, 5, (15, 2))
+random_points = np.random.uniform(-5, 5, (30, 2))
 
 Points_dict = {
     "Random Points": random_points,
