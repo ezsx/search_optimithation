@@ -31,7 +31,7 @@ app.layout = html.Div(
         html.Div([
             dcc.Dropdown(id='function-dropdown',
                          options=[{'label': name, 'value': name} for name in functions.keys()],
-                         value=list(functions.keys())[0],
+                         value="himmelblau",
                          clearable=False,
                          className='dropdown'),
             dcc.Dropdown(id='algorithm-dropdown',
@@ -146,3 +146,9 @@ def update_graph(n_clicks, function_name, algorithm_name, point_index, color_sca
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+# TODO:
+#  1) add more algorithms
+#  2) add more functions
+#  3) custom placeholder, output, title, button design
+#  4)
