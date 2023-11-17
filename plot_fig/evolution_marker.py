@@ -1,5 +1,6 @@
 import numpy as np
 import plotly.graph_objects as go
+from utils.base_plot_parametrs import base_slider, base_buttons
 
 
 def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_range=(-5, 5), y_range=(-5, 5)):
@@ -21,8 +22,7 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
     x, y = np.meshgrid(x, y)
 
     # Compute the function value at each grid point
-    z = np.array([f([x_point, y_point]) for x_point, y_point in zip(x.flatten(), y.flatten())])
-    z = z.reshape(x.shape)
+    z = f([x, y])
 
     # Create the surface plot of the function
     function_surface = go.Surface(x=x, y=y, z=z, colorscale=color_scale, opacity=0.8)
@@ -45,39 +45,8 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
     ]
 
     # Define slider and buttons
-    sliders = [{
-        "steps": [
-            {
-                "method": "animate",
-                "args": [
-                    [str(k)],
-                    {
-                        "frame": {"duration": 300, "redraw": True},
-                        "mode": "immediate",
-                        "transition": {"duration": 300}
-                    }
-                ],
-                "label": str(k)
-            } for k in range(len(populations))
-        ],
-        "active": 0,
-        "currentvalue": {"prefix": "Step: "}
-    }]
-
-    buttons = [{"type": "buttons",
-                "showactive": False,
-                "buttons": [{"label": "▶",
-                             "method": "animate",
-                             "args": [None, {
-                                 "frame": {"duration": 200, "redraw": True},
-                                 "fromcurrent": True,
-                                 "transition": {"duration": 100,
-                                                "easing": "quadratic-in-out"}}]},
-                            {"label": "❚❚",
-                             "method": "animate",
-                             "args": [[None], {"frame": {"duration": 0, "redraw": False},
-                                               "mode": "immediate",
-                                               "transition": {"duration": 0}}]}]}]
+    sliders = base_slider(frames)
+    buttons = base_buttons()
 
     # Define the camera settings for a consistent view
 

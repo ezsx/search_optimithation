@@ -21,7 +21,6 @@ color_scales = plotly.colors.named_colorscales()
 color_points = {"black": "black", "gold": "gold", "blue": "blue", "green": "green", "yellow": "yellow", "red": "red",
                 "white": "white"}
 
-
 # Define the layout
 app = dash.Dash(__name__)
 app.layout = html.Div(
@@ -30,28 +29,28 @@ app.layout = html.Div(
         html.Div([], className='inherted-container'),
         html.Div([
             dcc.Dropdown(id='function-dropdown',
-                         options=[{'label': name, 'value': name} for name in functions.keys()],
+                         options=[{'label': "function: " + name, 'value': name} for name in functions.keys()],
                          value="himmelblau",
                          clearable=False,
                          className='dropdown'),
             dcc.Dropdown(id='algorithm-dropdown',
-                         options=[{'label': name, 'value': name} for name in algorithms.keys()],
+                         options=[{'label': "algorithm: " + name, 'value': name} for name in algorithms.keys()],
                          value=list(algorithms.keys())[0],
                          clearable=False,
                          className='dropdown'),
             dcc.Dropdown(id='point-dropdown',
-                         options=[{'label': name, 'value': name} for name in Points_dict.keys()],
+                         options=[{'label': "point set: " + name, 'value': name} for name in Points_dict.keys()],
                          clearable=False,
                          value=list(Points_dict.keys())[0],
                          className='dropdown'),
             dcc.Dropdown(id='color-scale-dropdown',
-                         options=color_scales,
+                         options=[{'label': "plot color: " + name, 'value': name} for name in color_scales],
                          value='rdbu',
                          clearable=False,
                          className='dropdown'
                          ),
             dcc.Dropdown(id='point-color-dropdown',
-                         options=[{'label': name, 'value': name} for name in color_points.keys()],
+                         options=[{'label': "point color: " + name, 'value': name} for name in color_points.keys()],
                          clearable=False,
                          value=list(color_points.keys())[0],
                          className='dropdown'),
@@ -104,7 +103,6 @@ app.clientside_callback(
 )
 def update_graph(n_clicks, function_name, algorithm_name, point_index, color_scale, point_color,
                  stored_camera_data):
-
     function = functions[function_name]
     algorithm = algorithms[algorithm_name]
     points = Points_dict[point_index]
@@ -150,5 +148,5 @@ if __name__ == '__main__':
 # TODO:
 #  1) add more algorithms
 #  2) add more functions
+# DONE:
 #  3) custom placeholder, output, title, button design
-#  4)

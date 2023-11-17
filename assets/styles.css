@@ -49,16 +49,55 @@
   align-content: stretch;
   align-items: stretch;
   flex-direction: column;
-  margin: 10px;
-
+  margin: 10px 20px 10px 10px;
 }
-
+/* Dropdown styles */
 .dropdown {
-  font-size: 16px;
+  font-family: FreeMono, monospace; /* Font for consistency */
+  /*bold*/
   font-weight: 700;
-  font-family: 'Roboto', sans-serif;
-  padding-bottom: 5px; /* Reset */
+  min-width: 180px; /* Minimum width to accommodate content */
+  padding: 0px; /* Padding for spacing inside the dropdown */
+  border: 1px solid #ccc; /* Border for definition */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fff; /* White background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 20px; /* Text size */
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+  appearance: none; /* Remove default styling */
+  -webkit-appearance: none; /* Remove default styling for Safari */
+  -moz-appearance: none; /* Remove default styling for Firefox */
+  position: relative; /* Position relative for custom arrow */
+  margin-bottom: 5px; /* Spacing between stacked dropdowns */
 }
+
+/* Dropdown hover and focus effects */
+.dropdown:hover, .dropdown:focus {
+  border-color:#6359e1; /* Highlight border on hover/focus */
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25); /* Enhanced shadow on hover/focus */
+}
+
+/*!* Custom dropdown arrow *!*/
+/*.dropdown::after {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  right: 12px; !* Positioning to the right *!*/
+/*  top: 50%; !* Center vertically *!*/
+/*  transform: translateY(-50%); !* Center adjustment *!*/
+/*  border: 5px solid transparent; !* Transparent borders *!*/
+/*  border-top-color: #333; !* Arrow color *!*/
+/*  pointer-events: none; !* Ignore pointer events *!*/
+/*}*/
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .dropdown {
+    width: 100%; /* Full-width on smaller screens */
+    margin-bottom: 10px; /* Spacing between stacked dropdowns */
+  }
+}
+
 
 .output-container {
   grid-column: 3 / 5;
@@ -87,6 +126,35 @@
   margin: 10px 45px 10px 20px;
 }
 
+/* Textarea styles */
+.output-area {
+  width: calc(100% - 32px); /* Full width minus padding */
+  min-height: 150px; /* Minimum height */
+  padding: 16px; /* Spacious padding for the text */
+  border: 2px solid #ccc; /* Solid border with subtle color */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Slightly off-white background for less glare */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+  font-size: 1rem; /* Comfortable font size */
+  line-height: 1.5; /* Spacing between lines */
+  color: #333; /* Dark color for text for readability */
+  resize: none; /* Allow only vertical resizing */
+  transition: border-color 0.2s ease-in-out; /* Smooth transition*/
+  outline: none;
+}
+
+/* Textarea placeholder styles */
+
+.output-area::placeholder {
+color: #aaa; / Light color for the placeholder text */
+}
+
+/* Textarea focus styles */
+.output-area:focus, .output-area:hover {
+border-color: #ed6e61; / Highlight border color when focused /
+box-shadow: inset 0 1px 3px rgba(0, 123, 255, 0.1), 0 0 0 3px rgba(0, 123, 255, 0.1); / Outer glow effect on focus */
+}
+
 .graph-container {
   grid-column: 1 / 5;
   grid-row: 3/12;
@@ -111,4 +179,21 @@
   background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(90deg, #ed6e61, #6359e1) border-box;
   border: 4px solid transparent;
   padding: 8px;
+}
+
+/* Button styles */
+#update-camera-btn {
+  padding: 10px 20px;
+  margin: 0;
+  color: white;
+  background-color: #6359e1;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#update-camera-btn:hover {
+  background-color: #423a94;
 }
