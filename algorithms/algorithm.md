@@ -1,3 +1,6 @@
+
+# 5
+
 ### Theory Behind Bee Swarm Optimization
 
 Bee Swarm Optimization (BSO), more commonly known as Artificial Bee Colony (ABC), is an optimization algorithm inspired by the intelligent foraging behavior of honey bees. It was introduced by Karaboga in 2005 to optimize numerical problems. The algorithm simulates the process of bees finding and exploiting food sources, which in the context of optimization, corresponds to finding the optimal solutions in a search space.
@@ -42,4 +45,40 @@ The implementation of BSO in Python follows the above theoretical framework:
 
 By maintaining a balance between local exploitation and global exploration, BSO can effectively navigate the search space and often find good solutions to complex optimization problems.
 
-Include this explanation in your `algorithm_doc.md` file as a concise description of the Bee Swarm Optimization algorithm, its theoretical basis, and the structure of its implementation in Python.
+# 6
+
+### Theory Behind Artificial Immune Systems (AIS)
+
+Artificial Immune Systems (AIS) are a class of biologically inspired computing algorithms based on the principles and processes of the vertebrate immune system. The immune system is a robust, adaptive system that learns to recognize and combat pathogens. AIS algorithms take inspiration from this system, particularly the mechanisms of recognition, learning, and memory. One of the key concepts in AIS is the clonal selection principle, which explains how the immune system adapts to new, unknown pathogens by selecting and cloning certain types of immune cells that can recognize and neutralize these threats.
+
+### Clonal Selection Principle
+
+The clonal selection principle forms the basis of several AIS algorithms, including the clonal selection algorithm and the artificial immune network (AIN) algorithm. It involves the following steps:
+
+1. **Recognition**: Detection of pathogens by immune cells (antibodies).
+2. **Selection**: Selection of those immune cells that can recognize the pathogens effectively.
+3. **Cloning**: Cloning of the selected cells.
+4. **Mutation**: Introduction of mutations in the cloned cells to create a diverse set of cells.
+5. **Memory**: Retention of the most effective cells for faster response in the future.
+
+### Implementation of AIS Algorithm
+
+In the context of optimization problems, the AIS algorithm can be seen as a metaphor where the solutions to the problem are akin to the antibodies, and the objective function represents the antigen. The algorithm aims to evolve a set of solutions that are best suited to minimize (or maximize) the objective function.
+
+Here is how the AIS algorithm is implemented, inspired by the clonal selection principle:
+
+1. **Initialization**: A population of candidate solutions (antibodies) is randomly generated within the search space.
+
+2. **Affinity Calculation**: The affinity (or fitness) of each candidate solution is evaluated based on the objective function. In optimization, higher affinity corresponds to better solutions.
+
+3. **Clonal Selection**: Based on their affinity, candidate solutions are selected to undergo cloning. This step promotes the propagation of higher-quality solutions.
+
+4. **Hypermutation**: Clones of the candidate solutions are subjected to a mutation process, which introduces variations. The rate of mutation is typically inversely proportional to the affinity — better solutions undergo fewer mutations to preserve their quality, while worse solutions are more drastically altered in the hope of discovering better ones.
+
+5. **Selection**: After mutation, the population is reassessed, and a subset of the best-performing solutions is selected to form the new generation.
+
+6. **Diversity Introduction**: To avoid premature convergence to local optima, some degree of diversity is introduced by randomly replacing a portion of the population with new candidate solutions.
+
+7. **Iteration**: The process is repeated for a number of generations, or until a convergence criterion is met.
+
+In the given implementation, the AIS algorithm is particularly tailored for minimization problems. It utilizes a sort operation to rank the mutated clones based on the objective function and selects the best to form the new population. Furthermore, unique solutions are maintained to visualize the convergence process clearly.
