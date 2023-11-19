@@ -27,22 +27,32 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
     # Create the surface plot of the function
     function_surface = go.Surface(x=x, y=y, z=z, colorscale=color_scale, opacity=0.8)
 
-    # Define frames
-    frames = [
-        go.Frame(
+    # Define frames with a special color for the lowest z point
+    frames = []
+    for k, population in enumerate(populations):
+        # Evaluate the function for the current population
+        z_values = np.array([f(individual) for individual in population])
+
+        # Find the index of the lowest z value
+        min_z_index = np.argmin(z_values)
+
+        # Prepare marker colors, set the color for the minimum point
+        marker_colors = [color_point] * len(population)
+        marker_colors[min_z_index] = 'gold'  # Highlight the lowest point with gold color
+
+        frame = go.Frame(
             data=[
                 function_surface,
                 go.Scatter3d(
-                    x=population[:, 0], y=population[:, 1],
-                    z=[f(individual) for individual in population],
+                    x=population[:, 0], y=population[:, 1], z=z_values,
                     mode='markers',
-                    marker=dict(size=6, color=color_point),
-                    name=f'Step {k}')
+                    marker=dict(size=8, color=marker_colors),
+                    name=f'Step {k}'
+                )
             ],
             name=str(k)
         )
-        for k, population in enumerate(populations)
-    ]
+        frames.append(frame)
 
     # Define slider and buttons
     sliders = base_slider(frames)
@@ -61,14 +71,18 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
         sliders=sliders,
     )
 
-    # Create initial figure
+    # Create initial figure with a special color for the lowest z point in the first population
+    initial_z_values = np.array([f(individual) for individual in populations[0]])
+    initial_min_z_index = np.argmin(initial_z_values)
+    initial_marker_colors = [color_point] * len(populations[0])
+    initial_marker_colors[initial_min_z_index] = 'gold'  # Highlight the lowest point with gold color
+
     fig = go.Figure(
         data=[function_surface] +
              [go.Scatter3d(
-                 x=populations[0][:, 0], y=populations[0][:, 1],
-                 z=[f(individual) for individual in populations[0]],
+                 x=populations[0][:, 0], y=populations[0][:, 1], z=initial_z_values,
                  mode='markers',
-                 marker=dict(size=6, color=color_point),
+                 marker=dict(size=8, color=initial_marker_colors),
                  name='Step 0')
              ],
         frames=frames,
@@ -81,4 +95,3 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
     # automargin=True
     fig.update_layout(autosize=True)
     return fig
-

@@ -118,6 +118,10 @@ def update_graph(n_clicks, function_name, algorithm_name, point_index, color_sca
             plot_figure = plot_evolution
         case 'particle_swarm_optimization':
             plot_figure = plot_evolution
+        case 'bee_swarm_optimization':
+            plot_figure = plot_evolution
+        case 'immune_network_optimization':
+            plot_figure = plot_evolution
         case 'gradient_descent':
             plot_figure = plot_traces
         case 'quadratic_programming':
@@ -146,7 +150,8 @@ if __name__ == '__main__':
     app.run_server(debug=True)
 
 # TODO:
-#  1) add more algorithms
-#  2) add more functions
+#  1) add just 2 algorithms
+#  2) add some more functions
+#  3) add documentation to algorithms
 # DONE:
 #  3) custom placeholder, output, title, button design
