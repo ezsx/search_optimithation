@@ -122,6 +122,10 @@ def update_graph(n_clicks, function_name, algorithm_name, point_index, color_sca
             plot_figure = plot_evolution
         case 'immune_network_optimization':
             plot_figure = plot_evolution
+        case 'bacterial_foraging_optimization':
+            plot_figure = plot_evolution
+        case 'hybrid_pso_ga_optimization':
+            plot_figure = plot_evolution
         case 'gradient_descent':
             plot_figure = plot_traces
         case 'quadratic_programming':
@@ -150,8 +154,8 @@ if __name__ == '__main__':
     app.run_server(debug=True)
 
 # TODO:
-#  1) add just 2 algorithms
-#  2) add some more functions
-#  3) add documentation to algorithms
+#  1) may be correct hybrid_pso_ga_optimization.py
+#  2) add documentation to algorithms
 # DONE:
 #  3) custom placeholder, output, title, button design
+#  2) add some more functions

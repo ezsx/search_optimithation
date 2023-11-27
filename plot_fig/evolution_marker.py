@@ -39,6 +39,9 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
         # Prepare marker colors, set the color for the minimum point
         marker_colors = [color_point] * len(population)
         marker_colors[min_z_index] = 'gold'  # Highlight the lowest point with gold color
+        # changing size of lowest point
+        marker_size = [18] * len(population)
+        marker_size[min_z_index] = 30
 
         frame = go.Frame(
             data=[
@@ -46,7 +49,7 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
                 go.Scatter3d(
                     x=population[:, 0], y=population[:, 1], z=z_values,
                     mode='markers',
-                    marker=dict(size=8, color=marker_colors),
+                    marker=dict(size=marker_size, color=marker_colors),
                     name=f'Step {k}'
                 )
             ],
@@ -65,7 +68,7 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
         scene=dict(
             xaxis=dict(range=[x_range[0], x_range[1]]),
             yaxis=dict(range=[y_range[0], y_range[1]]),
-            zaxis=dict(range=[np.min(z), np.max(z)]),
+            zaxis=dict(range=[np.min(z)-1, np.max(z)]),
         ),
         updatemenus=buttons,
         sliders=sliders,
@@ -76,13 +79,16 @@ def plot_evolution(populations, f, color_scale='rdbu', color_point="black", x_ra
     initial_min_z_index = np.argmin(initial_z_values)
     initial_marker_colors = [color_point] * len(populations[0])
     initial_marker_colors[initial_min_z_index] = 'gold'  # Highlight the lowest point with gold color
+    # changing size of lowest point
+    initial_marker_size = [18] * len(populations[0])
+    initial_marker_size[initial_min_z_index] = 30
 
     fig = go.Figure(
         data=[function_surface] +
              [go.Scatter3d(
                  x=populations[0][:, 0], y=populations[0][:, 1], z=initial_z_values,
                  mode='markers',
-                 marker=dict(size=8, color=initial_marker_colors),
+                 marker=dict(size=initial_marker_size, color=initial_marker_colors),
                  name='Step 0')
              ],
         frames=frames,
