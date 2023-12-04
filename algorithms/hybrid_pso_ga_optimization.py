@@ -29,4 +29,6 @@ def hybrid_pso_ga_optimization(function, initial_points, pso_iterations=100, ga_
     ga_paths, ga_output = genetic_algorithm(function, pso_final_positions, num_generations=ga_iterations,
                                             mutation_rate=mutation_rate, mutation_scale=mutation_scale)
 
-    return ga_paths, ga_output
+    combined_paths = np.concatenate((pso_paths, ga_paths), axis=1)
+
+    return combined_paths, ga_output
