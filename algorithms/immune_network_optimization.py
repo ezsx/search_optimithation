@@ -61,7 +61,7 @@ def remove_duplicates(clones, function):
     return list(unique.values())
 
 
-def immune_network_optimization(function, points, num_generations=100, clone_rate=10, mutation_rate=0.1):
+def immune_network_optimization(function, points, num_generations=50, clone_rate=10, mutation_rate=0.1):
     """
     Performs an optimization using an Artificial Immune Network.
     """
@@ -87,9 +87,9 @@ def immune_network_optimization(function, points, num_generations=100, clone_rat
         print(population)
 
         # Record only the unique individuals in the path
-        paths.append(population)
+        paths.append(np.array(population))
 
     logging.info("Artificial Immune Network optimization finished")
     best_individual = min(population, key=function)
     output = f'Best finding minimum: [X: {best_individual[0]:.2f}, Y: {best_individual[1]:.2f}], Z: {function(best_individual):.2f}'
-    return np.array(paths), output
+    return paths, output
