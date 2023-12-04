@@ -155,3 +155,76 @@ Here is how the AIS algorithm is implemented, inspired by the clonal selection p
 7. **Iteration**: The process is repeated for a number of generations, or until a convergence criterion is met.
 
 In the given implementation, the AIS algorithm is particularly tailored for minimization problems. It utilizes a sort operation to rank the mutated clones based on the objective function and selects the best to form the new population. Furthermore, unique solutions are maintained to visualize the convergence process clearly.
+
+# 7
+
+### Theory Behind Bacterial Foraging Optimization (BFOA)
+
+Bacterial Foraging Optimization Algorithm (BFOA) is a nature-inspired computational technique derived from the foraging behavior of E. coli bacteria. These bacteria move through their environment in a series of tumbles and swims, seeking nutrients while avoiding noxious substances. This method of exploration and exploitation is mimicked in BFOA to solve optimization problems.
+
+### Key Concepts in BFOA
+
+BFOA incorporates several biological concepts:
+
+1. **Chemotaxis**: This process simulates the movement of bacteria through tumbling and swimming. Bacteria move in search of nutrients (optimal solutions), adjusting their path based on local gradients in the environment.
+
+2. **Swarming**: Bacteria tend to move in groups, influencing each other's movements, although this aspect is less emphasized in some BFOA implementations.
+
+3. **Reproduction**: Healthier (more fit) bacteria reproduce more, passing their traits to the next generation.
+
+4. **Elimination and Dispersal**: Occasional random changes in the environment lead to the elimination and dispersal of some bacteria, introducing diversity.
+
+### Implementation of BFOA
+
+The provided BFOA algorithm implementation follows these steps, adapted for optimization:
+
+1. **Initialization**: A population of bacteria (solutions) is initialized. Each bacterium's position in the multidimensional space represents a potential solution.
+
+2. **Chemotaxis**: Each bacterium undergoes a series of tumbles (random changes in direction) and subsequent swims (moves in the chosen direction). The length of the swim is determined by how beneficial the move is, assessed using the objective function.
+
+3. **Health Evaluation**: The health of each bacterium is evaluated based on the objective function. Lower function values indicate better health.
+
+4. **Reproduction**: Bacteria are sorted by their health, and the healthier half reproduces while the less healthy half is eliminated. The population size remains constant.
+
+5. **Elimination and Dispersal**: With a certain probability, some bacteria are randomly eliminated and new bacteria are introduced at random positions. This process helps maintain genetic diversity and prevents premature convergence.
+
+6. **Iteration**: These steps are repeated over a set number of iterations. Throughout these iterations, bacteria explore the solution space, moving towards more optimal solutions.
+
+7. **Termination and Output**: The algorithm concludes after the predetermined number of iterations. The best position and value found during these iterations are reported as the output.
+
+In this implementation, BFOA is tailored for minimization problems. The algorithm effectively balances exploration (finding new areas of the search space) and exploitation (refining existing solutions), making it suitable for solving complex optimization problems.
+
+# 8
+
+### Theory Behind Hybrid PSO-GA Optimization
+
+The Hybrid Particle Swarm Optimization (PSO) and Genetic Algorithm (GA) combines the strengths of both PSO and GA to effectively solve optimization problems. PSO is a swarm intelligence-based technique, inspired by the social behavior of birds and fish, effective in exploring the solution space. GA, inspired by the principles of natural selection and genetics, excels in exploiting the search space through mechanisms like crossover and mutation.
+
+### Key Concepts in Hybrid PSO-GA
+
+This hybrid approach leverages:
+
+1. **Exploration via PSO**: Initially, PSO is used to explore the search space. Particles (potential solutions) move according to their own experience and that of the swarm, leading to a broad exploration of the solution space.
+
+2. **Exploitation via GA**: GA takes the final positions from the PSO phase and uses evolutionary principles to exploit the search space. Through selection, crossover, and mutation, GA refines solutions by combining and altering the traits of existing solutions.
+
+### Implementation of Hybrid PSO-GA Algorithm
+
+The provided implementation follows these steps:
+
+1. **PSO Phase**:
+   - **Initialization**: The algorithm starts with a set of initial points representing potential solutions.
+   - **PSO Iterations**: For a defined number of iterations, the PSO algorithm is applied. Particles adjust their positions based on personal and global bests, using parameters like inertia weight (w), cognitive (c1), and social coefficients (c2).
+   - **Outcome**: The final positions of the particles after the PSO phase are used as input for the GA phase.
+
+2. **GA Phase**:
+   - **Initialization with PSO Results**: The GA starts with the final positions obtained from the PSO phase.
+   - **GA Iterations**: GA operates for a set number of generations. It involves selection (choosing the fittest solutions), crossover (combining traits of parent solutions to create new offspring), and mutation (introducing variations to maintain diversity).
+   - **Parameters**: Mutation rate and scale determine the probability and extent of changes during the mutation process.
+   - **Outcome**: The GA phase refines the solutions further, focusing on exploiting the promising areas identified by PSO.
+
+3. **Termination and Output**:
+   - The algorithm terminates after completing both the PSO and GA phases.
+   - The best position and value found during these phases are reported.
+
+This hybrid approach is designed to optimize the balance between exploration and exploitation. The PSO phase quickly explores the solution space to identify promising regions, while the GA phase exploits these regions to refine the solutions. This combination often leads to better performance in complex optimization problems compared to using PSO or GA alone.
